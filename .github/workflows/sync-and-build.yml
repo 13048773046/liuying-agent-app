@@ -1,8 +1,6 @@
-name: Sync 1.0.1 and Build iOS
+name: Build iOS 1.0.1 (manual)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -38,21 +36,6 @@ jobs:
           test -f pubspec.yaml
           grep -q 'version: 1.0.1+2' pubspec.yaml
           test -f assets/brand/xiaoying_full.png
-          test -f brand_src/native/launch_1170x2532.png
-
-      - name: Commit imported source
-        run: |
-          set -euo pipefail
-          git config user.name 'liuying-agent-bot'
-          git config user.email 'liuying-agent-bot@users.noreply.github.com'
-          git add -A
-          if git diff --cached --quiet; then
-            echo 'No source changes to commit.'
-          else
-            git commit -m 'feat: 纸白日系漫画 UI、手机验证码登录、原生启动图与图标（1.0.1）'
-            git push
-          fi
-          git status --short
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
