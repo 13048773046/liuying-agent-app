@@ -1,4 +1,4 @@
-name: Build iOS 1.0.1 (manual)
+name: Build iOS 1.0.4 (manual)
 
 on:
   workflow_dispatch:
@@ -14,10 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Import 1.0.1 source snapshot
+      - name: Import 1.0.4 source snapshot
         run: |
           set -euo pipefail
-          curl -fsSL -o /tmp/source.zip 'https://aka.doubaocdn.com/s/rqMVdBVLr1'
+          curl -fsSL -o /tmp/source.zip 'https://aka.doubaocdn.com/s/l8HHRn6AzD'
           rm -rf /tmp/source
           mkdir -p /tmp/source
           unzip -q /tmp/source.zip -d /tmp/source
@@ -34,7 +34,8 @@ jobs:
             --exclude='ios/.symlinks' \
             /tmp/source/ ./
           test -f pubspec.yaml
-          grep -q 'version: 1.0.1+2' pubspec.yaml
+          grep -q 'version: 1.0.4+5' pubspec.yaml
+          test -f lib/pages/home/af_browser_handoff.dart
           test -f assets/brand/xiaoying_full.png
 
       - name: Set up Flutter
@@ -61,28 +62,29 @@ jobs:
           set -euo pipefail
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qry LiuyingAgent-1.0.1-unsigned.ipa Payload
-          ls -lh LiuyingAgent-1.0.1-unsigned.ipa
+          zip -qry LiuyingAgent-1.0.4-unsigned.ipa Payload
+          ls -lh LiuyingAgent-1.0.4-unsigned.ipa
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: liuying-agent-ios-unsigned-1.0.1
-          path: LiuyingAgent-1.0.1-unsigned.ipa
+          name: liuying-agent-ios-unsigned-1.0.4
+          path: LiuyingAgent-1.0.4-unsigned.ipa
           retention-days: 30
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.1-unsigned
-          name: 小萤 Agent 1.0.1 · 未签名 IPA
+          tag_name: v1.0.4-unsigned
+          name: 小萤 Agent 1.0.4 · 未签名 IPA
           body: |
-            小萤 Agent 独立版 1.0.1（Android + iOS）。
+            小萤 Agent 独立版 1.0.4（iOS 未签名 IPA）。
 
-            - 纸白日系漫画 UI，手机号验证码登录。
-            - 原生启动图与图标，透明小萤立绘。
+            - AI 可打开 App 内浏览器，把登录 / 验证码 / 2FA / 支付 / 授权交给用户接管；用户点“完成，继续”后 AI 拿到当前网址、标题和可选页面摘要并继续执行。
+            - 追问卡、文件交付卡与执行时间线保留。
+            - 工作模式默认“计划 → 执行 → 观察 → 交付”，不设工具轮数上限。
             - Bundle ID：`com.liuying.agent`
             - 本附件为 iOS 未签名 IPA，需要 AltStore / Sideloadly / 自签工具安装。
             - 共用流萤社区 `/af` 后端，社区原版 Agent 保留。
-          files: LiuyingAgent-1.0.1-unsigned.ipa
+          files: LiuyingAgent-1.0.4-unsigned.ipa
           fail_on_unmatched_files: true
