@@ -223,6 +223,11 @@ void main() {
     await _warmImages(tester, const [
       'assets/ai/xiaoying.png',
     ]);
+    // 先让真实异步的 SharedPreferences 与 mock HTTP 完成，再进入固定时长渲染。
+    await tester.runAsync(() async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 600));
     await tester.pump(const Duration(seconds: 2));
     await expectLater(
