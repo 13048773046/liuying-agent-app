@@ -1,0 +1,44 @@
+name: Sync source snapshot
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Import final source snapshot
+        run: |
+          set -euo pipefail
+          curl -sSL -o /tmp/source.zip 'https://aka.doubaocdn.com/s/0R4Ucy4M94'
+          rm -rf /tmp/source
+          mkdir -p /tmp/source
+          unzip -q /tmp/source.zip -d /tmp/source
+          rsync -a \
+            --exclude='.github' \
+            --exclude='brand_src' \
+            --exclude='build' \
+            --exclude='.dart_tool' \
+            /tmp/source/ ./
+          test -f pubspec.yaml
+          test -f test/goldens/chat.png
+          test -f docs/screenshots/chat.png
+
+      - name: Commit final source
+        run: |
+          set -euo pipefail
+          git config user.name 'liuying-agent-bot'
+          git config user.email 'liuying-agent-bot@users.noreply.github.com'
+          git add -A
+          git rm -f .github/workflows/sync-source.yml
+          git commit -m 'chore: 同步最终源码、对话页截图与验收文档'
+          git push
