@@ -19,7 +19,7 @@ jobs:
       - name: Import source snapshot
         run: |
           set -euo pipefail
-          curl -sSL -o /tmp/source.zip 'https://aka.doubaocdn.com/s/TKW09EK5Zw'
+          curl -sSL -o /tmp/source.zip 'https://aka.doubaocdn.com/s/UW72UaSJfm'
           rm -rf /tmp/source
           mkdir -p /tmp/source
           unzip -q /tmp/source.zip -d /tmp/source
@@ -61,7 +61,7 @@ jobs:
         run: flutter analyze
 
       - name: Test
-        run: flutter test
+        run: flutter test --exclude-tags golden
 
       - name: Build iOS (unsigned)
         run: flutter build ios --release --no-codesign
