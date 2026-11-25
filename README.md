@@ -4,8 +4,10 @@
 
 ![启动页](docs/screenshots/splash.png)
 ![登录页](docs/screenshots/login.png)
+![手机验证码登录](docs/screenshots/login_phone.png)
 ![Agent 欢迎页](docs/screenshots/workbench.png)
 ![对话页](docs/screenshots/chat.png)
+![会话抽屉](docs/screenshots/drawer.png)
 
 ## 这是什么
 
@@ -19,7 +21,7 @@
 
 ## 功能
 
-- 品牌启动页 + 账号密码 / Token 两种登录方式
+- 纸白漫画启动页 + 手机号验证码（默认）/ 账号密码 / Token 三种登录方式
 - 会话列表、新建/删除会话、历史消息
 - SSE 流式对话、思考过程折叠、工具调用卡片
 - 多模式（对话 / 快速 / 工作）与模型选择
@@ -34,7 +36,7 @@
 lib/
   main.dart                 独立启动壳、启动页 → 登录门 → Agent
   splash_page.dart          1450ms 品牌启动页
-  login_page.dart           账号密码 / Token 登录
+  login_page.dart           手机验证码 / 密码 / Token 登录
   config.dart               站点、API、媒体地址
   api/client.dart           HTTP / Token / 登录
   design/
@@ -46,7 +48,7 @@ lib/
     af_palette.dart         Agent 专用色板
 assets/
   ai/                       小萤头像与招手 GIF
-  brand/                    启动图、登录头图、欢迎卡
+  brand/                    透明小萤立绘与头肩贴纸
   fonts/                    NotoSansSC
 android/                    com.liuying.agent，独立签名与启动屏
 ios/                        com.liuying.agent，权限、启动屏与图标
@@ -106,7 +108,7 @@ flutter build apk --release
 flutter build ios --release --no-codesign
 mkdir -p Payload
 cp -R build/ios/iphoneos/Runner.app Payload/
-zip -qry LiuyingAgent-1.0.0-unsigned.ipa Payload
+zip -qry LiuyingAgent-1.0.1-unsigned.ipa Payload
 ```
 
 仓库自带 GitHub Actions：`.github/workflows/ios-unsigned.yml`。推送 tag 或在 Actions 里手动运行，会构建未签名 IPA 并上传到 GitHub Release。未签名 IPA 需要 AltStore / Sideloadly / 自签工具安装，不能直接上架 App Store。
@@ -119,7 +121,7 @@ flutter test
 flutter test test/visual_test.dart --update-goldens
 ```
 
-当前结果：`flutter analyze` 0 issues，`flutter test` 9/9 通过；视觉基线为 390×844（启动/登录/欢迎/对话），另有 320×568 小屏与 1.3 倍字体布局测试。CI 用 `--exclude-tags golden` 规避 macOS 与 Linux 的字体栅格差异。
+当前结果：`flutter analyze` 0 issues，`flutter test` 全部通过；视觉基线为 390×844（启动/登录/手机验证码登录/欢迎/对话/会话抽屉/推理档位），另有 320×568 小屏与 1.3 倍字体布局测试。CI 用 `--exclude-tags golden` 规避 macOS 与 Linux 的字体栅格差异。
 
 详见 [docs/VERIFY.md](docs/VERIFY.md)。
 
@@ -127,12 +129,12 @@ flutter test test/visual_test.dart --update-goldens
 
 - Token 存在 `flutter_secure_storage`，不写明文 SharedPreferences。
 - Android `allowBackup=false`、`usesCleartextTraffic=false`；iOS ATS 禁止任意明文。
-- 仓库不包含 `android/key.properties`、`*.jks`、构建产物与品牌母版。
+- 仓库不包含 `android/key.properties`、`*.jks`、构建产物与签名私钥；设计母版在 `brand_src/`。
 - 附件与下载链接走社区同源接口；不新增第三方统计 SDK。
 
 ## 品牌素材
 
-角色「小萤」原图由项目方提供。启动图、登录头图、Agent 欢迎卡基于该形象生成，母版保存在本地 `brand_src/`（不随仓库分发）；App 内使用压缩后的 JPEG。视觉方向为日系动漫漫画：银发绿瞳、薄荷绿、墨黑、暖纸白、网点与硬边框分镜。
+角色「小萤」原图由项目方提供。启动主视觉、App 图标、透明立绘与头肩贴纸基于该形象生成；设计母版在 `brand_src/`，App 内使用透明 PNG。视觉方向为日系漫画：银发绿瞳、薄荷绿、墨黑、暖纸白、网点、裁切标记与硬边框分镜。
 
 ## 与社区的关系
 

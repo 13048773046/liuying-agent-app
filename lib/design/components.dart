@@ -44,10 +44,10 @@ class ImmersivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
+      value: SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: background,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
         backgroundColor: background,
@@ -341,8 +341,11 @@ class PillButton extends StatelessWidget {
           padding: _pad,
           decoration: BoxDecoration(
             color: bg,
-            borderRadius: AppRadius.rPill,
-            border: border == null ? null : Border.all(color: border),
+            borderRadius: AppRadius.rSm,
+            border: Border.all(
+              color: border ?? const Color(AppColors.textPrimary),
+              width: 1.5,
+            ),
             boxShadow: glow && variant == PillVariant.primary
                 ? AppEffects.accentGlow()
                 : null,
@@ -355,24 +358,24 @@ class PillButton extends StatelessWidget {
 
   (Color, Color, Color?) get _colors => switch (variant) {
     PillVariant.primary => (
-      const Color(AppColors.accent),
-      const Color(AppColors.onAccent),
-      null,
+      const Color(AppColors.textPrimary),
+      const Color(AppColors.card),
+      const Color(AppColors.textPrimary),
     ),
     PillVariant.tonal => (
-      Colors.white.withValues(alpha: 0.12),
+      const Color(AppColors.accentSoft),
       const Color(AppColors.textPrimary),
-      null,
+      const Color(AppColors.accent),
     ),
     PillVariant.ghost => (
-      Colors.transparent,
+      const Color(AppColors.card),
       const Color(AppColors.textPrimary),
-      const Color(AppColors.border),
+      const Color(AppColors.textPrimary),
     ),
     PillVariant.danger => (
-      const Color(AppColors.danger).withValues(alpha: 0.16),
+      const Color(AppColors.card),
       const Color(AppColors.danger),
-      null,
+      const Color(AppColors.danger),
     ),
   };
 }
@@ -851,22 +854,17 @@ class VerifiedBadge extends StatelessWidget {
           height: size,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Color.lerp(color, Colors.white, 0.34)!, color],
-            ),
+            color: color,
             border: borderColor == null
                 ? null
                 : Border.all(
                     color: borderColor!,
                     width: size >= 16 ? 1.2 : 1.0,
                   ),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.24),
-                blurRadius: size * 0.2,
-                offset: const Offset(0, 1),
+                color: Color(0x6614110E),
+                offset: Offset(2, 2),
               ),
             ],
           ),

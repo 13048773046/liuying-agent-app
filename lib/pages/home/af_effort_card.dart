@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../design/manga.dart';
 import '../../design/tokens.dart';
 import 'af_providers.dart';
 
@@ -44,7 +45,7 @@ Future<void> showAfEffortCard(
   return showModalBottomSheet<void>(
     context: context,
     backgroundColor: Colors.transparent,
-    barrierColor: Colors.black.withValues(alpha: 0.42),
+    barrierColor: const Color(0x6614110E),
     isScrollControlled: true,
     builder: (_) => AfEffortSheet(
       mode: mode,
@@ -210,14 +211,16 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1B1B1F),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: const Color(0x29F6F2E9)),
+                        color: const Color(AppColors.card),
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(
+                          color: const Color(0xFF14110E),
+                          width: 2,
+                        ),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color(0xE6000000),
-                            blurRadius: 38,
-                            offset: Offset(0, 14),
+                            color: Color(0x6614110E),
+                            offset: Offset(5, 5),
                           ),
                         ],
                       ),
@@ -291,19 +294,47 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
                   margin: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                     color: const Color(AppColors.card),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: const Color(0x24F6F2E9)),
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: const Color(0xFF14110E),
+                      width: 2,
+                    ),
                     boxShadow: const [
-                      BoxShadow(
-                        color: Color(0xCC000000),
-                        blurRadius: 44,
-                        offset: Offset(0, 16),
-                      ),
+                      BoxShadow(color: Color(0x6614110E), offset: Offset(6, 6)),
                     ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 8, 6),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '推理设置',
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: -0.4,
+                                color: Color(0xFF14110E),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const MangaTag(text: 'SETTING / 03', onDark: false),
+                            const Spacer(),
+                            IconButton(
+                              visualDensity: VisualDensity.compact,
+                              onPressed: () => Navigator.of(context).pop(),
+                              icon: const Icon(
+                                Icons.close_rounded,
+                                size: 18,
+                                color: Color(0xFF14110E),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(height: 2, color: const Color(0xFF14110E)),
                       _row(
                         key: 'mode',
                         label: '模式',
@@ -345,7 +376,7 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppType.micro.copyWith(
-                                  color: const Color(0x99F6F2E9),
+                                  color: const Color(0x9914110E),
                                 ),
                               ),
                             ),
@@ -388,9 +419,9 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
   }
 
   Widget _divider() => Container(
-    height: 1,
+    height: 1.5,
     margin: const EdgeInsets.symmetric(horizontal: 14),
-    color: const Color(0x14F6F2E9),
+    color: const Color(0x2614110E),
   );
 
   /// 一行：左标签 / 右值 + 箭头
@@ -402,7 +433,7 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
     bool accent = false,
   }) {
     return InkWell(
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(2),
       onTap: () {
         if (key == 'model') {
           _openModelPop();
@@ -487,15 +518,11 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
             width: 178,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: const Color(0xFF1B1B1F),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: const Color(0x29F6F2E9)),
+              color: const Color(AppColors.card),
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(color: const Color(0xFF14110E), width: 2),
               boxShadow: const [
-                BoxShadow(
-                  color: Color(0xCC000000),
-                  blurRadius: 34,
-                  offset: Offset(0, 12),
-                ),
+                BoxShadow(color: Color(0x6614110E), offset: Offset(4, 4)),
               ],
             ),
             child: Column(
@@ -503,7 +530,7 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
               children: [
                 for (final it in items)
                   InkWell(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(2),
                     onTap: () {
                       setState(() {
                         if (_pop == 'mode') {
@@ -533,7 +560,7 @@ class _AfEffortSheetState extends State<AfEffortSheet> {
                                       fontSize: 12.5,
                                       color: it.$1 == cur
                                           ? const Color(AppColors.accent)
-                                          : const Color(0xFFF6F2E9),
+                                          : const Color(0xFF14110E),
                                     ),
                                   ),
                                   if (it.$3.isNotEmpty)
@@ -655,7 +682,7 @@ class _AfModelPopPanelState extends State<_AfModelPopPanel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(2),
           onTap: () => setState(() => _apiView = null),
           child: SizedBox(
             height: 38,
@@ -738,7 +765,7 @@ class _AfModelPopPanelState extends State<_AfModelPopPanel> {
     bool trailingArrow = false,
   }) {
     return InkWell(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(2),
       onTap: onTap,
       child: SizedBox(
         height: 46,
@@ -759,7 +786,7 @@ class _AfModelPopPanelState extends State<_AfModelPopPanel> {
                         fontSize: 12.5,
                         color: selected
                             ? const Color(AppColors.accent)
-                            : const Color(0xFFF6F2E9),
+                            : const Color(0xFF14110E),
                       ),
                     ),
                     if (sub.isNotEmpty)
@@ -804,7 +831,7 @@ class _AfModelPopPanelState extends State<_AfModelPopPanel> {
   }
 
   Widget _addTile() => InkWell(
-    borderRadius: BorderRadius.circular(10),
+    borderRadius: BorderRadius.circular(2),
     onTap: () => widget.onAddApi(),
     child: SizedBox(
       height: 44,
@@ -927,7 +954,6 @@ class _EffortSliderState extends State<_EffortSlider>
         _width = box.maxWidth;
         final w = _width - _knobSize;
         final fillW = _knobSize + w * _pos;
-        final hot = widget.index >= 3;
 
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -955,11 +981,16 @@ class _EffortSliderState extends State<_EffortSlider>
                   right: 0,
                   top: 3,
                   height: _trackH,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_trackH / 2),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color(0xFF14110E),
+                        width: 1.2,
+                      ),
+                    ),
                     child: Stack(
                       children: [
-                        Container(color: const Color(0xFF1A1A1D)),
+                        Container(color: const Color(0xFFEFE8D9)),
                         Positioned(
                           left: 0,
                           top: 0,
@@ -967,30 +998,8 @@ class _EffortSliderState extends State<_EffortSlider>
                           width: fillW,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(_trackH / 2),
-                              gradient: LinearGradient(
-                                colors: hot
-                                    ? [
-                                        const Color(0xFF45E0AE)
-                                            .withValues(alpha: .55),
-                                        const Color(0xFF45E0AE),
-                                      ]
-                                    : [
-                                        const Color(0xFF45E0AE).withValues(
-                                          alpha: .30 + .06 * widget.index,
-                                        ),
-                                        const Color(0xFF45E0AE).withValues(
-                                          alpha: .66 + .05 * widget.index,
-                                        ),
-                                      ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF45E0AE)
-                                      .withValues(alpha: hot ? .35 : .12),
-                                  blurRadius: hot ? 16 : 8,
-                                ),
-                              ],
+                              borderRadius: BorderRadius.zero,
+                              color: const Color(0xFF14110E),
                             ),
                             child: AnimatedBuilder(
                               animation: _dots,
@@ -1009,7 +1018,7 @@ class _EffortSliderState extends State<_EffortSlider>
                           child: CustomPaint(
                             painter: _TicksPainter(
                               pos: _pos,
-                              color: const Color(0x57F6F2E9),
+                              color: const Color(0x5714110E),
                             ),
                           ),
                         ),
@@ -1036,7 +1045,7 @@ class _EffortSliderState extends State<_EffortSlider>
                         height: _knobSize,
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(2),
                           boxShadow: const [
                             BoxShadow(
                               color: Color(0x73000000),
@@ -1090,11 +1099,9 @@ class _DotsPainter extends CustomPainter {
 
       final y = s.dy * size.height;
       final r = 1.5 + (s.dx % 3) * 0.28;
-      paint.color = Colors.white.withValues(alpha: a.clamp(0.0, 1.0));
+      paint.color = const Color(AppColors.card)
+          .withValues(alpha: a.clamp(0.0, 1.0));
       canvas.drawCircle(Offset(x, y), r, paint);
-
-      paint.color = const Color(0xFF45E0AE).withValues(alpha: a * 0.35);
-      canvas.drawCircle(Offset(x, y), r * 2.4, paint);
     }
   }
 
@@ -1118,7 +1125,7 @@ class _TicksPainter extends CustomPainter {
       final x = 17 + (size.width - 34) * (i / 4);
       final on = i == active;
       paint.color = on
-          ? const Color(0xFF45E0AE).withValues(alpha: .85)
+          ? const Color(AppColors.accent).withValues(alpha: .95)
           : color.withValues(alpha: .34);
       canvas.drawCircle(Offset(x, size.height / 2), on ? 3.2 : 1.6, paint);
     }

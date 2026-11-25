@@ -178,7 +178,7 @@ class _AfMemoryPageState extends State<AfMemoryPage> {
                     padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
                     decoration: BoxDecoration(
                       color: const Color(AppColors.card),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(4),
                       border: Border.all(
                         color: const Color(AppColors.hairline),
                       ),

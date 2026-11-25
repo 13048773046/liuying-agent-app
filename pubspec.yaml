@@ -1,7 +1,7 @@
 name: liuying_agent
 description: "小萤 Agent · 独立 App（复用流萤社区 /af 后端）"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.13.5

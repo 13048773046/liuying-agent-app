@@ -66,3 +66,6 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# 视觉测试失败产物
+/test/failures/

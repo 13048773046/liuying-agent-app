@@ -1,6 +1,7 @@
-/// 小萤 Agent · 品牌启动页
+/// 小萤 Agent · 纸白漫画启动页
 ///
-/// 原生启动图之后接一屏日系漫画主视觉，再进入登录/工作台。
+/// 一页漫画封面：巨大字标、透明人物贴纸、分镜框与对话框。
+/// 不使用人物背景图、光晕或渐变。
 library;
 
 import 'dart:async';
@@ -43,108 +44,207 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.paddingOf(context).bottom;
     final top = MediaQuery.paddingOf(context).top;
+    final bottom = MediaQuery.paddingOf(context).bottom;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: const Color(AppColors.bg),
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              'assets/brand/splash_art.jpg',
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-              filterQuality: FilterQuality.medium,
-            ),
-            // 顶部/底部压暗，保证叠加文字可读。
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xE6080A09),
-                    Color(0x00080A09),
-                    Color(0x00080A09),
-                    Color(0xF2080A09),
-                  ],
-                  stops: [0, 0.28, 0.58, 1],
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Positioned(
+                top: 18,
+                left: 24,
+                right: 24,
+                child: FadeTransition(
+                  opacity: _ctrl,
+                  child: Row(
+                    children: [
+                      Text(
+                        'VOL.01  /  PROLOGUE',
+                        style: AppType.micro.copyWith(
+                          fontSize: 9,
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const Spacer(),
+                      const MangaStamp(text: '小萤'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  22,
-                  18 + top * 0.2,
-                  22,
-                  16 + bottom,
+
+              Positioned(
+                top: 58 + top * 0.1,
+                left: 24,
+                right: 24,
+                child: FadeTransition(
+                  opacity: _ctrl,
+                  child: const MangaWordmark(),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FadeTransition(
-                      opacity: CurvedAnimation(
-                        parent: _ctrl,
-                        curve: const Interval(0, 0.7, curve: Curves.easeOut),
+              ),
+
+              // 左侧标题区：大字排成漫画台词。
+              Positioned(
+                top: 150,
+                left: 24,
+                width: 210,
+                child: FadeTransition(
+                  opacity: CurvedAnimation(
+                    parent: _ctrl,
+                    curve: const Interval(0.15, 1, curve: Curves.easeOut),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '给目标，\n拆步骤，\n交成品。',
+                        style: AppType.display.copyWith(
+                          fontSize: 31,
+                          height: 1.18,
+                          letterSpacing: -1.6,
+                        ),
                       ),
-                      child: SlideTransition(
-                        position:
-                            Tween<Offset>(
-                              begin: const Offset(0, -0.03),
-                              end: Offset.zero,
-                            ).animate(
-                              CurvedAnimation(
-                                parent: _ctrl,
-                                curve: const Interval(
-                                  0,
-                                  0.75,
-                                  curve: Curves.easeOutCubic,
+                      const SizedBox(height: 12),
+                      Container(
+                        width: 168,
+                        height: 5,
+                        color: const Color(AppColors.textPrimary),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        '轻活在本机做。\n重活进云沙箱。',
+                        style: AppType.bodySm.copyWith(
+                          fontSize: 12,
+                          height: 1.7,
+                          color: const Color(AppColors.textSecondary),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // 右侧分镜框：只放透明人物，没有人物背景。
+              Positioned(
+                top: 238,
+                right: 18,
+                width: 206,
+                child: FadeTransition(
+                  opacity: _ctrl,
+                  child: SlideTransition(
+                    position:
+                        Tween<Offset>(
+                          begin: const Offset(0.04, 0.02),
+                          end: Offset.zero,
+                        ).animate(
+                          CurvedAnimation(
+                            parent: _ctrl,
+                            curve: Curves.easeOutCubic,
+                          ),
+                        ),
+                    child: MangaPanel(
+                      tag: 'CUT / 01',
+                      color: const Color(AppColors.card),
+                      child: SizedBox(
+                        height: 400,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Positioned(
+                              left: 8,
+                              right: 8,
+                              bottom: 28,
+                              top: 10,
+                              child: const MangaCutout(
+                                asset: 'assets/brand/xiaoying_full.png',
+                                height: 370,
+                                alignment: Alignment.bottomCenter,
+                              ),
+                            ),
+                            Positioned(
+                              left: 10,
+                              right: 10,
+                              bottom: 10,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                  horizontal: 7,
+                                ),
+                                color: const Color(AppColors.textPrimary),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '小萤',
+                                      style: AppType.micro.copyWith(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w800,
+                                        color: const Color(AppColors.card),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      'ONLINE',
+                                      style: AppType.micro.copyWith(
+                                        fontSize: 8,
+                                        letterSpacing: 1.4,
+                                        fontWeight: FontWeight.w700,
+                                        color: const Color(
+                                          AppColors.accentSoft,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                        child: const MangaWordmark(),
+                          ],
+                        ),
                       ),
                     ),
-                    const Spacer(),
-                    FadeTransition(
-                      opacity: CurvedAnimation(
-                        parent: _ctrl,
-                        curve: const Interval(0.25, 1, curve: Curves.easeOut),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const SpeechBubble(
-                            text: '欢迎回来。给我一个目标，我拆步骤、调工具，做完交给你。',
-                          ),
-                          const SizedBox(height: 14),
-                          Row(
-                            children: [
-                              const MangaLoader(width: 118),
-                              const SizedBox(width: 12),
-                              Text(
-                                '正在唤醒小萤',
-                                style: AppType.micro.copyWith(
-                                  fontSize: 10.5,
-                                  letterSpacing: 1.2,
-                                  color: const Color(0xB8F6F2E9),
-                                ),
-                              ),
-                              const Spacer(),
-                              const MangaTag(text: 'ONLINE / 01'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+
+              // 页脚对话框与加载线。
+              Positioned(
+                left: 24,
+                right: 24,
+                bottom: 18 + bottom,
+                child: FadeTransition(
+                  opacity: CurvedAnimation(
+                    parent: _ctrl,
+                    curve: const Interval(0.3, 1, curve: Curves.easeOut),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SpeechBubble(text: '欢迎回来。给我一个目标，我拆步骤、调工具，做完交给你。'),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          const MangaLoader(width: 104),
+                          const SizedBox(width: 12),
+                          Text(
+                            '正在唤醒小萤',
+                            style: AppType.micro.copyWith(
+                              fontSize: 10,
+                              letterSpacing: 1.2,
+                              color: const Color(AppColors.textSecondary),
+                            ),
+                          ),
+                          const Spacer(),
+                          const MangaTag(text: 'READY / 01', onDark: false),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

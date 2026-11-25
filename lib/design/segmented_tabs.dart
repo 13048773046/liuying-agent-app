@@ -152,14 +152,7 @@ class _SegmentedTabsState extends State<SegmentedTabs>
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: const Color(AppColors.accent),
-                      borderRadius: BorderRadius.circular(99),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(AppColors.accent)
-                              .withValues(alpha: 0.35),
-                          blurRadius: 8,
-                        ),
-                      ],
+                      borderRadius: BorderRadius.zero,
                     ),
                   ),
                 ),

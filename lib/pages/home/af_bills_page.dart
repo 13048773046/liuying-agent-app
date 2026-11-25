@@ -120,7 +120,7 @@ class _AfBillsPageState extends State<AfBillsPage> {
                       height: 34,
                       decoration: BoxDecoration(
                         color: const Color(AfPalette.card),
-                        borderRadius: BorderRadius.circular(11),
+                        borderRadius: BorderRadius.circular(3),
                         border: Border.all(color: const Color(AfPalette.line)),
                       ),
                       child: const Icon(
@@ -166,7 +166,7 @@ class _AfBillsPageState extends State<AfBillsPage> {
       padding: const EdgeInsets.fromLTRB(14, 13, 14, 13),
       decoration: BoxDecoration(
         color: const Color(AfPalette.card),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(4),
         border: Border.all(color: const Color(AfPalette.line)),
       ),
       child: Row(
@@ -322,7 +322,7 @@ class _AfBillsPageState extends State<AfBillsPage> {
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       decoration: BoxDecoration(
         color: const Color(AfPalette.card),
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(4),
         border: Border.all(color: const Color(AfPalette.line)),
       ),
       child: Row(
@@ -332,11 +332,11 @@ class _AfBillsPageState extends State<AfBillsPage> {
             height: 32,
             decoration: BoxDecoration(
               color: isRecharge
-                  ? const Color(0x1F7CE3B6)
+                  ? const Color(0x1F2E8F73)
                   : (byok
                         ? const Color(0x1AFFB35C)
                         : const Color(AfPalette.accentSoft)),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(3),
               border: Border.all(
                 color: isRecharge
                     ? const Color(AfPalette.accentLine)
@@ -385,7 +385,7 @@ class _AfBillsPageState extends State<AfBillsPage> {
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0x1AFFB35C),
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(2),
                           border: Border.all(color: const Color(0x33FFB35C)),
                         ),
                         child: const Text(

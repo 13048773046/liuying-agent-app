@@ -97,7 +97,8 @@ Future<AfProvider?> showAfAddProviderSheet(
     isScrollControlled: true,
     backgroundColor: const Color(AppColors.card),
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+      side: BorderSide(color: Color(0xFF14110E), width: 2),
     ),
     builder: (_) => _AddProviderSheet(edit: edit),
   );
@@ -282,8 +283,9 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                     child: Text(
                       _isEdit ? '编辑 API' : '添加 API',
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.3,
                       ),
                     ),
                   ),
@@ -298,7 +300,7 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                 ],
               ),
             ),
-            const Divider(height: 1, color: Color(AppColors.hairline)),
+            const Divider(height: 2, color: Color(0xFF14110E)),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
@@ -321,7 +323,7 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                           final pr = _afPresets[i];
                           final on = _base.text.trim() == pr[1];
                           return InkWell(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(2),
                             onTap: () => setState(() {
                               _base.text = pr[1];
                               if (_name.text.trim().isEmpty) _name.text = pr[0];
@@ -332,14 +334,15 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                               ),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(2),
                                 color: on
-                                    ? const Color(0x1A45E0AE)
-                                    : const Color(AppColors.elevated),
+                                    ? const Color(AppColors.accentSoft)
+                                    : const Color(AppColors.card),
                                 border: Border.all(
                                   color: on
-                                      ? const Color(0x7345E0AE)
-                                      : const Color(AppColors.hairline),
+                                      ? const Color(AppColors.accent)
+                                      : const Color(0xFF14110E),
+                                  width: 1.2,
                                 ),
                               ),
                               child: Text(
@@ -370,10 +373,11 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                       height: 42,
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: const Color(AppColors.elevated),
-                        borderRadius: BorderRadius.circular(11),
+                        color: const Color(AppColors.card),
+                        borderRadius: BorderRadius.circular(2),
                         border: Border.all(
-                          color: const Color(AppColors.hairline),
+                          color: const Color(0xFF14110E),
+                          width: 1.2,
                         ),
                       ),
                       child: Row(
@@ -403,11 +407,14 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                       child: OutlinedButton(
                         onPressed: _probing ? null : _probe,
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(AppColors.accent),
-                          side: const BorderSide(color: Color(0x7345E0AE)),
-                          backgroundColor: const Color(0x1445E0AE),
+                          foregroundColor: const Color(0xFF14110E),
+                          side: const BorderSide(
+                            color: Color(0xFF14110E),
+                            width: 1.5,
+                          ),
+                          backgroundColor: const Color(AppColors.card),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(2),
                           ),
                         ),
                         child: _probing
@@ -432,7 +439,7 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                           _err!,
                           style: const TextStyle(
                             fontSize: 11.5,
-                            color: Color(0xFFFF7A7A),
+                            color: Color(AppColors.danger),
                           ),
                         ),
                       ),
@@ -472,7 +479,7 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                       child: TextButton(
                         onPressed: _saving ? null : _delete,
                         style: TextButton.styleFrom(
-                          foregroundColor: const Color(0xFFFF7A7A),
+                          foregroundColor: const Color(AppColors.danger),
                         ),
                         child: const Text('删除', style: TextStyle(fontSize: 13)),
                       ),
@@ -485,11 +492,15 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                       child: ElevatedButton(
                         onPressed: (_checked.isEmpty || _saving) ? null : _save,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(AppColors.accent),
-                          disabledBackgroundColor: const Color(0x6645E0AE),
-                          foregroundColor: const Color(0xFF03140F),
+                          backgroundColor: const Color(0xFF14110E),
+                          disabledBackgroundColor: const Color(0xFFEFE8D9),
+                          foregroundColor: const Color(AppColors.card),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13),
+                            borderRadius: BorderRadius.circular(2),
+                            side: const BorderSide(
+                              color: Color(0xFF14110E),
+                              width: 1.5,
+                            ),
                           ),
                         ),
                         child: const Text(
@@ -550,14 +561,17 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
           vertical: 12,
         ),
         filled: true,
-        fillColor: const Color(AppColors.elevated),
+        fillColor: const Color(AppColors.card),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(11),
-          borderSide: const BorderSide(color: Color(AppColors.hairline)),
+          borderRadius: BorderRadius.circular(2),
+          borderSide: const BorderSide(color: Color(0xFF14110E), width: 1.2),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(11),
-          borderSide: const BorderSide(color: Color(0x7345E0AE)),
+          borderRadius: BorderRadius.circular(2),
+          borderSide: const BorderSide(
+            color: Color(AppColors.accent),
+            width: 2,
+          ),
         ),
       ),
     );
@@ -568,7 +582,7 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(2),
         onTap: () => setState(() {
           if (on) {
             _checked.remove(m);
@@ -580,9 +594,9 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
           height: 42,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            color: const Color(AppColors.elevated),
-            borderRadius: BorderRadius.circular(11),
-            border: Border.all(color: const Color(AppColors.hairline)),
+            color: const Color(AppColors.card),
+            borderRadius: BorderRadius.circular(2),
+            border: Border.all(color: const Color(0xFF14110E), width: 1.2),
           ),
           child: Row(
             children: [
@@ -593,18 +607,18 @@ class _AddProviderSheetState extends State<_AddProviderSheet> {
                   color: on
                       ? const Color(AppColors.accent)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(2),
                   border: Border.all(
                     color: on
                         ? const Color(AppColors.accent)
-                        : const Color(0x40F6F2E9),
+                        : const Color(0x4014110E),
                   ),
                 ),
                 child: on
                     ? const Icon(
                         Icons.check_rounded,
                         size: 13,
-                        color: Color(0xFF03140F),
+                        color: Color(AppColors.card),
                       )
                     : null,
               ),
@@ -721,7 +735,32 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text('选择模型', style: AppType.title),
+        Row(
+          children: [
+            const Text(
+              '选择模型',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                letterSpacing: -0.4,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              color: const Color(0xFF14110E),
+              child: const Text(
+                'MODEL / 02',
+                style: TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: .8,
+                  color: Color(AppColors.card),
+                ),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 12),
         _builtinCard('deepseek-flash', '快速', const [
           '日常够用、便宜',
@@ -754,15 +793,15 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
         ],
         const SizedBox(height: 12),
         InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(3),
           onTap: _add,
           child: Container(
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0x4D45E0AE)),
-              color: const Color(0x0F45E0AE),
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(color: const Color(AppColors.accent)),
+              color: const Color(AppColors.accentSoft),
             ),
             child: const Text(
               '＋ 添加 API',
@@ -781,7 +820,7 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
   Widget _builtinCard(String key, String title, List<String> lines) {
     final on = widget.current == key;
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(3),
       onTap: () {
         widget.onPick(key);
         Navigator.of(context).pop();
@@ -789,12 +828,11 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color(AppColors.elevated),
+          borderRadius: BorderRadius.circular(3),
+          color: const Color(AppColors.card),
           border: Border.all(
-            color: on
-                ? const Color(AppColors.accent)
-                : const Color(AppColors.hairline),
+            color: on ? const Color(AppColors.accent) : const Color(0xFF14110E),
+            width: on ? 2 : 1.2,
           ),
         ),
         child: Row(
@@ -829,17 +867,16 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
   Widget _providerRow(AfProvider p) {
     final on = _isCurrentProvider(p);
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(3),
       onTap: () => setState(() => _apiView = p.id),
       child: Container(
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color(AppColors.elevated),
+          borderRadius: BorderRadius.circular(3),
+          color: const Color(AppColors.card),
           border: Border.all(
-            color: on
-                ? const Color(AppColors.accent)
-                : const Color(AppColors.hairline),
+            color: on ? const Color(AppColors.accent) : const Color(0xFF14110E),
+            width: on ? 2 : 1.2,
           ),
         ),
         child: Row(
@@ -849,9 +886,9 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
               height: 28,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: const Color(0x1A45E0AE),
+                color: const Color(AppColors.accentSoft),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0x4045E0AE)),
+                border: Border.all(color: const Color(0xFF14110E)),
               ),
               child: Text(
                 p.name.isEmpty ? 'A' : p.name.substring(0, 1),
@@ -979,15 +1016,15 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
         ),
         const SizedBox(height: 10),
         InkWell(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(3),
           onTap: _add,
           child: Container(
             height: 44,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0x4D45E0AE)),
-              color: const Color(0x0F45E0AE),
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(color: const Color(AppColors.accent)),
+              color: const Color(AppColors.accentSoft),
             ),
             child: const Text(
               '＋ 添加 API',
@@ -1009,7 +1046,7 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(2),
         onTap: () {
           widget.onPick(key);
           Navigator.of(context).pop();
@@ -1018,7 +1055,7 @@ class _AfModelPickerSheetState extends State<AfModelPickerSheet> {
           height: 46,
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
-            color: const Color(AppColors.elevated),
+            color: const Color(AppColors.card),
             borderRadius: BorderRadius.circular(11),
             border: Border.all(
               color: on

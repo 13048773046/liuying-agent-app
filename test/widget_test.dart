@@ -6,19 +6,19 @@ void main() {
     await tester.pumpWidget(const LiuyingAgentApp(initialToken: ''));
 
     // 启动页：品牌字标 + 小萤主视觉，先于登录页出现。
-    expect(find.text('LIUYING  /  AGENT'), findsOneWidget);
-    expect(find.text('小萤 Agent'), findsOneWidget);
+    expect(find.text('LIUYING COMICS'), findsOneWidget);
+    expect(find.text('AGENT'), findsOneWidget);
+    expect(find.text('给目标，\n拆步骤，\n交成品。'), findsOneWidget);
     expect(find.text('正在唤醒小萤'), findsOneWidget);
-    expect(find.text('进入 Agent'), findsNothing);
+    expect(find.text('验证码登录 / 注册'), findsNothing);
 
     // 等待启动页计时与切换动画结束。
     await tester.pump(const Duration(milliseconds: 1800));
     await tester.pumpAndSettle();
 
-    expect(find.text('进入 Agent'), findsOneWidget);
-    expect(find.text('账号密码'), findsOneWidget);
+    expect(find.text('验证码登录 / 注册'), findsOneWidget);
+    expect(find.text('手机验证码'), findsOneWidget);
     expect(find.text('Token'), findsOneWidget);
-    expect(find.text('JAPANESE MANGA / 01'), findsOneWidget);
-    expect(find.text('进入 Agent'), findsOneWidget);
+    expect(find.text('LOGIN / 01'), findsOneWidget);
   });
 }

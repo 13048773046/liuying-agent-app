@@ -297,7 +297,7 @@ class _AfBillingPageState extends State<AfBillingPage> {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: const Color(AfPalette.card),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: const Color(AfPalette.line)),
                     ),
                     child: Column(
@@ -329,8 +329,8 @@ class _AfBillingPageState extends State<AfBillingPage> {
                                   vertical: 9,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF0E1117),
-                                  borderRadius: BorderRadius.circular(10),
+                                  color: const Color(AfPalette.card),
+                                  borderRadius: BorderRadius.circular(2),
                                   border: Border.all(
                                     color: const Color(AfPalette.line),
                                   ),
@@ -368,11 +368,16 @@ class _AfBillingPageState extends State<AfBillingPage> {
                                 ),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  gradient: _busy ? null : AfPalette.accentGrad,
                                   color: _busy
                                       ? const Color(AfPalette.card2)
-                                      : null,
-                                  borderRadius: BorderRadius.circular(10),
+                                      : const Color(AfPalette.text),
+                                  borderRadius: BorderRadius.circular(2),
+                                  border: Border.all(
+                                    color: _busy
+                                        ? const Color(AfPalette.line)
+                                        : const Color(AfPalette.text),
+                                    width: 1.2,
+                                  ),
                                 ),
                                 child: Text(
                                   '兑换',
@@ -431,7 +436,7 @@ class _AfBillingPageState extends State<AfBillingPage> {
         height: 34,
         decoration: BoxDecoration(
           color: const Color(AfPalette.card),
-          borderRadius: BorderRadius.circular(11),
+          borderRadius: BorderRadius.circular(3),
           border: Border.all(color: const Color(AfPalette.line)),
         ),
         child: Icon(icon, size: 17, color: const Color(AfPalette.text2)),
@@ -443,8 +448,8 @@ class _AfBillingPageState extends State<AfBillingPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: active ? const Color(0x1F7CE3B6) : const Color(AfPalette.card),
-        borderRadius: BorderRadius.circular(13),
+        color: active ? const Color(0x1F2E8F73) : const Color(AfPalette.card),
+        borderRadius: BorderRadius.circular(4),
         border: Border.all(
           color: active
               ? const Color(AfPalette.accentLineStrong)
@@ -475,7 +480,7 @@ class _AfBillingPageState extends State<AfBillingPage> {
                     vertical: 1,
                   ),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(2),
                     border: Border.all(
                       color: const Color(AfPalette.accentLine),
                     ),

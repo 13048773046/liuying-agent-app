@@ -38,8 +38,8 @@ void main() {
     await tester.pumpWidget(app(LoginPage(onLoggedIn: (_) {})));
     await tester.pump(const Duration(milliseconds: 300));
     expect(tester.takeException(), isNull);
-    expect(find.text('进入 Agent'), findsOneWidget);
-    expect(find.text('账号密码'), findsOneWidget);
+    expect(find.text('验证码登录 / 注册'), findsOneWidget);
+    expect(find.text('手机验证码'), findsOneWidget);
     expect(find.text('Token'), findsOneWidget);
   });
 

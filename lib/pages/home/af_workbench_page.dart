@@ -27,7 +27,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config.dart';
-import '../../widgets/ai_avatar.dart';
 import '../../widgets/input_panel_host.dart';
 import 'af_billing_page.dart';
 import 'af_memory_page.dart';
@@ -983,12 +982,10 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
       width: _drawerW,
       child: DecoratedBox(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF0C0F15), Color(0xFF090B0F)],
+          color: Color(AfPalette.bg),
+          border: Border(
+            right: BorderSide(color: Color(AfPalette.text), width: 2),
           ),
-          border: Border(right: BorderSide(color: Color(AfPalette.line))),
         ),
         child: SafeArea(
           child: Column(
@@ -1001,12 +998,14 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     const Text(
                       '会话',
                       style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: .3,
+                        fontSize: 19,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.3,
                         color: Color(AfPalette.text),
                       ),
                     ),
+                    const SizedBox(width: 7),
+                    const MangaTag(text: 'INDEX / 01', onDark: false),
                     const Spacer(),
                     PressableScale(
                       onTap: _closeDrawer,
@@ -1077,13 +1076,14 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                                 ),
                                 decoration: BoxDecoration(
                                   color: active
-                                      ? const Color(0x147CE3B6)
+                                      ? const Color(AfPalette.accentSoft)
                                       : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(2),
                                   border: Border.all(
                                     color: active
-                                        ? const Color(AfPalette.accentLine)
+                                        ? const Color(AfPalette.text)
                                         : Colors.transparent,
+                                    width: 1.3,
                                   ),
                                 ),
                                 child: Stack(
@@ -1220,10 +1220,11 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                   child: Container(
                     height: 42,
                     decoration: BoxDecoration(
-                      color: const Color(0x0F7CE3B6),
-                      borderRadius: BorderRadius.circular(13),
+                      color: const Color(AfPalette.accentSoft),
+                      borderRadius: BorderRadius.circular(2),
                       border: Border.all(
-                        color: const Color(AfPalette.accentLine),
+                        color: const Color(AfPalette.text),
+                        width: 1.5,
                       ),
                     ),
                     child: const Row(
@@ -1915,7 +1916,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
   Widget _mainScaffold() {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(AfPalette.bg),
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -1955,19 +1956,26 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     return PressableScale(
       onTap: onTap,
       child: Container(
-        width: 34,
-        height: 34,
+        width: 36,
+        height: 36,
         decoration: BoxDecoration(
           color: const Color(AfPalette.card),
-          borderRadius: BorderRadius.circular(11),
-          border: Border.all(color: const Color(AfPalette.line)),
+          borderRadius: BorderRadius.circular(2),
+          border: Border.all(color: const Color(AfPalette.text), width: 1.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x6614110E),
+              offset: Offset(2, 2),
+              blurRadius: 0,
+            ),
+          ],
         ),
         child: Icon(
           icon,
           size: 17,
           color: dim
               ? const Color(AfPalette.text3)
-              : const Color(AfPalette.text2),
+              : const Color(AfPalette.text),
         ),
       ),
     );
@@ -1975,26 +1983,44 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
 
   Widget _header() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpace.gutter, 6, 14, 10),
+      padding: const EdgeInsets.fromLTRB(16, 10, 14, 6),
       child: Row(
         children: [
-          _headBtn(Icons.segment_rounded, _openDrawer),
-          const SizedBox(width: 12),
+          _headBtn(Icons.menu_rounded, _openDrawer),
+          const SizedBox(width: 11),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '小萤 Agent',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -.2,
-                    height: 1.2,
-                    color: Color(AfPalette.text),
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      '小萤',
+                      style: TextStyle(
+                        fontSize: 27,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1.2,
+                        height: .92,
+                        color: Color(AfPalette.text),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 2),
+                      child: Text(
+                        'AGENT',
+                        style: TextStyle(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 2.2,
+                          color: const Color(AfPalette.accent),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 4),
                 Row(
                   children: [
                     Flexible(
@@ -2003,7 +2029,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 11,
+                          fontSize: 10.5,
                           letterSpacing: .2,
                           color: Color(AfPalette.text3),
                         ),
@@ -2028,7 +2054,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             dim: true,
           ),
           if (widget.onLogout == null) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: 7),
             _headBtn(Icons.close_rounded, () {
               final nav = Navigator.of(context);
               if (nav.canPop()) {
@@ -2064,12 +2090,15 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         height: 27,
         padding: const EdgeInsets.symmetric(horizontal: 11),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          color: highlight ? const Color(0x1F7CE3B6) : const Color(0x08F6F2E9),
+          borderRadius: BorderRadius.circular(2),
+          color: highlight
+              ? const Color(AfPalette.accentSoft)
+              : const Color(AfPalette.card),
           border: Border.all(
             color: highlight
-                ? const Color(AfPalette.accentLineStrong)
-                : const Color(AfPalette.line),
+                ? const Color(AfPalette.accent)
+                : const Color(AfPalette.text),
+            width: 1.2,
           ),
         ),
         child: Row(
@@ -2158,7 +2187,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
       padding: const EdgeInsets.symmetric(horizontal: 11),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        color: const Color(0x08F6F2E9),
+        color: const Color(0x0814110E),
         border: Border.all(color: const Color(AfPalette.line)),
       ),
       child: Row(
@@ -2322,7 +2351,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            color: const Color(0x22F6F2E9),
+                            color: const Color(0x2214110E),
                           ),
                           child: Text(
                             '会员专属',
@@ -2408,60 +2437,73 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     return GestureDetector(
       onTap: _loadQuota,
       behavior: HitTestBehavior.opaque,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Color(AfPalette.line), width: 1),
+            bottom: BorderSide(color: Color(AfPalette.line), width: 1),
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                const MangaTag(text: '额度 / QUOTA', onDark: false),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     loaded
-                        ? '剩余 ${_fmtTokens(left)} · 5h ${_fmtTokens(windowLeft)}'
+                        ? '剩余 ${_fmtTokens(left)}  ·  5h ${_fmtTokens(windowLeft)}'
                         : '同步额度中…',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 10.5,
+                      height: 1.2,
                       letterSpacing: .2,
                       color: blocked
                           ? const Color(AfPalette.danger)
-                          : const Color(AfPalette.text3),
+                          : const Color(AfPalette.text2),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
                 Text(
-                  loaded
-                      ? '${_plan.toUpperCase()} · ¥${balYuan.toStringAsFixed(2)}'
-                      : '',
+                  loaded ? _plan.toUpperCase() : '',
                   style: const TextStyle(
-                    fontSize: 10.5,
-                    letterSpacing: .2,
+                    fontSize: 9,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.w800,
                     color: Color(AfPalette.text3),
                   ),
                 ),
+                if (loaded) const SizedBox(width: 6),
+                if (loaded)
+                  Text(
+                    '¥${balYuan.toStringAsFixed(0)}',
+                    style: const TextStyle(
+                      fontSize: 9,
+                      color: Color(AfPalette.text3),
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 6),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: TweenAnimationBuilder<double>(
-                tween: Tween(begin: 0, end: pct),
-                duration: const Duration(milliseconds: 520),
-                curve: Curves.easeOutCubic,
-                builder: (_, v, _) => LinearProgressIndicator(
-                  value: loaded ? v : null,
-                  minHeight: 3,
-                  backgroundColor: const Color(AfPalette.line),
-                  valueColor: AlwaysStoppedAnimation(
-                    blocked
-                        ? const Color(AfPalette.danger)
-                        : (low
-                              ? const Color(AfPalette.warm)
-                              : const Color(AfPalette.accent)),
-                  ),
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: pct),
+              duration: const Duration(milliseconds: 520),
+              curve: Curves.easeOutCubic,
+              builder: (_, v, _) => LinearProgressIndicator(
+                value: loaded ? v : null,
+                minHeight: 4,
+                backgroundColor: const Color(AfPalette.line),
+                valueColor: AlwaysStoppedAnimation(
+                  blocked
+                      ? const Color(AfPalette.danger)
+                      : (low
+                            ? const Color(AfPalette.warm)
+                            : const Color(AfPalette.accent)),
                 ),
               ),
             ),
@@ -2472,26 +2514,44 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
   }
 
   Widget _agentStep(String num, String label) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          num,
-          style: AppType.micro.copyWith(
-            fontSize: 9.5,
-            letterSpacing: .8,
-            color: const Color(AfPalette.accent),
-          ),
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(9, 8, 8, 8),
+        decoration: BoxDecoration(
+          color: const Color(AfPalette.card),
+          border: Border.all(color: const Color(AfPalette.text), width: 1.3),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x5514110E),
+              offset: Offset(2, 2),
+              blurRadius: 0,
+            ),
+          ],
         ),
-        const SizedBox(width: 5),
-        Text(
-          label,
-          style: AppType.micro.copyWith(
-            fontSize: 11.5,
-            color: const Color(AfPalette.text2),
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              num,
+              style: const TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w900,
+                letterSpacing: .5,
+                color: Color(AfPalette.accent),
+              ),
+            ),
+            const SizedBox(width: 5),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+                color: Color(AfPalette.text),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -2550,104 +2610,98 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
 
   Widget _welcome() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.gutter),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 6),
-          MangaPanel(
-            key: ValueKey('welcome-panel-$_avatarEpoch'),
-            tag: 'AGENT / READY',
-            padding: EdgeInsets.zero,
-            child: AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    'assets/brand/agent_welcome.jpg',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.topCenter,
-                    filterQuality: FilterQuality.medium,
-                  ),
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0x000A0C0B),
-                          Color(0x000A0C0B),
-                          Color(0xB30A0C0B),
-                          Color(0xF20A0C0B),
-                        ],
-                        stops: [0, 0.55, 0.82, 1],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 14,
-                    right: 14,
-                    bottom: 11,
-                    child: Row(
-                      children: [
-                        const AiAvatar(size: 26, animate: false),
-                        const SizedBox(width: 8),
-                        Text(
-                          '小萤 · 已上线',
-                          style: AppType.micro.copyWith(
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1.2,
-                            color: const Color(0xFFF6F2E9),
-                          ),
+          const MangaSectionTitle(index: '01', title: '开工'),
+          const SizedBox(height: 12),
+
+          // 不对称封面：左边大字目标，右边透明人物贴纸。
+          SizedBox(
+            height: 292,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  width: 220,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '给我一个\n目标。',
+                        style: AppType.display.copyWith(
+                          fontSize: 37,
+                          height: 1.02,
+                          letterSpacing: -2.4,
                         ),
-                        const Spacer(),
-                        const MangaTag(text: '01'),
-                      ],
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        width: 128,
+                        height: 4,
+                        color: const Color(AfPalette.text),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '我拆步骤，\n做完交给你。',
+                        style: AppType.h2.copyWith(
+                          fontSize: 21,
+                          height: 1.32,
+                          letterSpacing: -0.8,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  right: -8,
+                  bottom: -2,
+                  width: 190,
+                  height: 290,
+                  child: IgnorePointer(
+                    child: MangaCutout(
+                      key: ValueKey('welcome-panel-$_avatarEpoch'),
+                      asset: 'assets/brand/xiaoying_full.png',
+                      height: 286,
+                      alignment: Alignment.bottomRight,
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  left: 2,
+                  bottom: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      MangaTag(text: 'AGENT / READY', onDark: false),
+                      SizedBox(height: 7),
+                      MangaStamp(text: '开工'),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
+
+          const SizedBox(height: 12),
+          const SpeechBubble(text: '会规划、会调工具、会交付成品。轻活在本机做；重活自动进云沙箱，不占手机。'),
           const SizedBox(height: 18),
-          Text(
-            '给我一个目标。\n我拆步骤，做完交给你。',
-            style: AppType.h1.copyWith(
-              fontSize: 24,
-              height: 1.3,
-              color: const Color(AfPalette.text),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            '会规划、会调工具、会交付成品。\n轻活在本机做；重活自动进云沙箱，不占你手机。',
-            style: AppType.body.copyWith(
-              fontSize: 13,
-              height: 1.75,
-              color: const Color(AfPalette.text2),
-            ),
-          ),
-          const SizedBox(height: 18),
+
           Row(
             children: [
               _agentStep('01', '拆步骤'),
-              const SizedBox(width: 14),
+              const SizedBox(width: 8),
               _agentStep('02', '调工具'),
-              const SizedBox(width: 14),
+              const SizedBox(width: 8),
               _agentStep('03', '交成品'),
             ],
           ),
-          const SizedBox(height: AppSpace.x6),
-          Text(
-            '试一句',
-            style: AppType.micro.copyWith(
-              fontSize: 12,
-              color: const Color(AfPalette.text3),
-              letterSpacing: 1.2,
-            ),
-          ),
+          const SizedBox(height: 20),
+
+          const MangaSectionTitle(index: '02', title: '试一句'),
           const SizedBox(height: 10),
           Wrap(
             spacing: 8,
@@ -2655,24 +2709,33 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             children: ['帮我整理下载文件夹', '把这个网页的正文抓下来', '写一份周报', '读一下这个 CSV 并统计']
                 .map(
                   (t) => PressableScale(
-                    onTap: () {
-                      _input.text = t;
-                    },
+                    onTap: () => _input.text = t,
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
+                        horizontal: 11,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
                         color: const Color(AfPalette.card),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(AfPalette.line)),
+                        borderRadius: BorderRadius.circular(2),
+                        border: Border.all(
+                          color: const Color(AfPalette.text),
+                          width: 1.3,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x5514110E),
+                            offset: Offset(2, 2),
+                            blurRadius: 0,
+                          ),
+                        ],
                       ),
                       child: Text(
                         t,
                         style: AppType.body.copyWith(
-                          fontSize: 12.5,
-                          color: const Color(AfPalette.text2),
+                          fontSize: 12,
+                          height: 1.3,
+                          color: const Color(AfPalette.text),
                         ),
                       ),
                     ),
@@ -2799,7 +2862,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
   final _taps = <TapGestureRecognizer>[];
 
   /// 轻量富文本：代码块（带复制）、行内代码、加粗、标题、列表、链接。
-  Widget _richBody(String text) {
+  Widget _richBody(String text, {Color? textColor}) {
     if (text.isEmpty) return const SizedBox.shrink();
     final blocks = <Widget>[];
     final lines = text.split('\n');
@@ -2838,6 +2901,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                 fontSize: hash <= 2 ? 16 : 15,
                 fontWeight: FontWeight.w700,
                 height: 1.5,
+                color: textColor,
               ),
             ),
           ),
@@ -2851,12 +2915,12 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         final row = <Widget>[];
         for (final m in imgRe.allMatches(line)) {
           final txt = line.substring(lastEnd, m.start).trim();
-          if (txt.isNotEmpty) row.add(_inline(txt));
+          if (txt.isNotEmpty) row.add(_inline(txt, textColor: textColor));
           row.add(_chatImage(m.group(1)!));
           lastEnd = m.end;
         }
         final tail = line.substring(lastEnd).trim();
-        if (tail.isNotEmpty) row.add(_inline(tail));
+        if (tail.isNotEmpty) row.add(_inline(tail, textColor: textColor));
         blocks.add(
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: row),
         );
@@ -2876,11 +2940,16 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                   height: 4,
                   margin: const EdgeInsets.only(right: 9, top: 6),
                   decoration: const BoxDecoration(
-                    color: Color(0x997CE3B6),
+                    color: Color(0x992E8F73),
                     shape: BoxShape.circle,
                   ),
                 ),
-                Expanded(child: _inline(t.replaceFirst(bulletRe, ''))),
+                Expanded(
+                  child: _inline(
+                    t.replaceFirst(bulletRe, ''),
+                    textColor: textColor,
+                  ),
+                ),
               ],
             ),
           ),
@@ -2888,7 +2957,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         i++;
         continue;
       }
-      blocks.add(_inline(line));
+      blocks.add(_inline(line, textColor: textColor));
       i++;
     }
     return SelectionArea(
@@ -2946,7 +3015,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     );
   }
 
-  Widget _inline(String s) {
+  Widget _inline(String s, {Color? textColor}) {
     final spans = <InlineSpan>[];
     final re = RegExp(r'(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^()]+\))');
     var last = 0;
@@ -2969,7 +3038,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             style: const TextStyle(
               fontFamily: 'monospace',
               fontSize: 12.5,
-              backgroundColor: Color(0x1FF6F2E9),
+              backgroundColor: Color(0x1F14110E),
             ),
           ),
         );
@@ -2999,7 +3068,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     if (last < s.length) spans.add(TextSpan(text: s.substring(last)));
     return Text.rich(
       TextSpan(children: spans),
-      style: AppType.body.copyWith(fontSize: 14, height: 1.6),
+      style: AppType.body.copyWith(fontSize: 14, height: 1.6, color: textColor),
     );
   }
 
@@ -3007,7 +3076,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: const Color(0xFF0B0E14),
+        color: const Color(0xFFFFFCF4),
         borderRadius: BorderRadius.circular(9),
         border: Border.all(color: const Color(AfPalette.line)),
       ),
@@ -3017,7 +3086,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
           Container(
             padding: const EdgeInsets.fromLTRB(10, 5, 6, 5),
             decoration: const BoxDecoration(
-              border: Border(bottom: BorderSide(color: Color(0x14F6F2E9))),
+              border: Border(bottom: BorderSide(color: Color(0x1414110E))),
             ),
             child: Row(
               children: [
@@ -3109,13 +3178,13 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
         decoration: BoxDecoration(
-          color: const Color(0xFF121713),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0x33F6F2E9), width: 1.1),
-          boxShadow: [
+          color: const Color(AfPalette.card),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: const Color(AfPalette.text), width: 2),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.5),
-              offset: const Offset(3, 3),
+              color: Color(0xCC14110E),
+              offset: Offset(5, 5),
               blurRadius: 0,
             ),
           ],
@@ -3123,6 +3192,8 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _aiStamp(),
+            const SizedBox(height: 8),
             _processedHead(t),
             const SizedBox(height: 9),
             const _DashLine(),
@@ -3133,7 +3204,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                   fontSize: 14.5,
                   height: 1.65,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFFF6F2E9),
+                  color: Color(0xFF14110E),
                 ),
                 child: _richBody(parts.summary),
               ),
@@ -3148,7 +3219,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                 style: const TextStyle(
                   fontSize: 14,
                   height: 1.7,
-                  color: Color(0xFFDDD9CF),
+                  color: Color(0xFF3A342E),
                 ),
                 child: (m.streaming || identical(m, _activeAi))
                     ? PhraseRevealText(
@@ -3157,7 +3228,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                         style: const TextStyle(
                           fontSize: 14,
                           height: 1.7,
-                          color: Color(0xFFDDD9CF),
+                          color: Color(0xFF3A342E),
                         ),
                       )
                     : _richBody(parts.body),
@@ -3182,6 +3253,38 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
     );
   }
 
+  Widget _aiStamp() {
+    return Row(
+      children: [
+        Container(
+          width: 26,
+          height: 26,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: const Color(AfPalette.text), width: 1.5),
+            image: const DecorationImage(
+              image: AssetImage('assets/brand/xiaoying_portrait.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        const Text(
+          '小萤',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w900,
+            color: Color(AfPalette.text),
+          ),
+        ),
+        const SizedBox(width: 6),
+        const MangaTag(text: 'REPLY / 本话', onDark: false),
+        const Spacer(),
+        const MangaStamp(text: '完成'),
+      ],
+    );
+  }
+
   /// 豆包卡顶部的处理时长。跨过一分钟用「X 分 Y 秒」，与豆包一致。
   Widget _processedHead(_Turn t) {
     final m = t.msg;
@@ -3196,7 +3299,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             height: 1.35,
             fontWeight: FontWeight.w500,
             letterSpacing: .1,
-            color: Color(0xFFCFCBBF),
+            color: Color(0xFF14110E),
           ),
         ),
         if (streaming) ...[const SizedBox(width: 8), const ThinkingDots()],
@@ -3248,7 +3351,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Row(
                 children: [
-                  Icon(meta.$1, size: 15, color: const Color(0xFFA9B0A6)),
+                  Icon(meta.$1, size: 15, color: const Color(0xFF5A544A)),
                   const SizedBox(width: 7),
                   Flexible(
                     child: Text(
@@ -3260,7 +3363,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                         height: 1.45,
                         letterSpacing: .1,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFFC4CCD7),
+                        color: Color(0xFF3A342E),
                       ),
                     ),
                   ),
@@ -3272,7 +3375,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     child: const Icon(
                       Icons.chevron_right_rounded,
                       size: 14,
-                      color: Color(0xFFA9B0A6),
+                      color: Color(0xFF5A544A),
                     ),
                   ),
                 ],
@@ -3286,7 +3389,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
           style: const TextStyle(
             fontSize: 14,
             height: 1.7,
-            color: Color(0xFFDDD9CF),
+            color: Color(0xFF3A342E),
           ),
         ),
         AnimatedSize(
@@ -3300,7 +3403,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                   padding: const EdgeInsets.only(left: 10),
                   decoration: const BoxDecoration(
                     border: Border(
-                      left: BorderSide(color: Color(0x33F6F2E9), width: 1),
+                      left: BorderSide(color: Color(0x3314110E), width: 1),
                     ),
                   ),
                   child: SelectionArea(
@@ -3309,7 +3412,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                       style: const TextStyle(
                         fontSize: 11.5,
                         height: 1.7,
-                        color: Color(0xFF98A2B3),
+                        color: Color(0xFF5A544A),
                       ),
                     ),
                   ),
@@ -3463,7 +3566,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     const Icon(
                       Icons.psychology_alt_outlined,
                       size: 15,
-                      color: Color(0xFFA9B0A6),
+                      color: Color(0xFF5A544A),
                     ),
                     const SizedBox(width: 7),
                     Text(
@@ -3473,7 +3576,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                         height: 1.45,
                         fontWeight: FontWeight.w500,
                         letterSpacing: .1,
-                        color: Color(0xFFC4CCD7),
+                        color: Color(0xFF3A342E),
                       ),
                     ),
                     if (streaming) ...[
@@ -3488,7 +3591,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                       child: const Icon(
                         Icons.chevron_right_rounded,
                         size: 14,
-                        color: Color(0xFFA9B0A6),
+                        color: Color(0xFF5A544A),
                       ),
                     ),
                   ],
@@ -3508,7 +3611,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     constraints: const BoxConstraints(maxHeight: 260),
                     decoration: const BoxDecoration(
                       border: Border(
-                        left: BorderSide(color: Color(0x33F6F2E9), width: 1),
+                        left: BorderSide(color: Color(0x3314110E), width: 1),
                       ),
                     ),
                     child: SingleChildScrollView(
@@ -3519,7 +3622,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                           style: const TextStyle(
                             fontSize: 11.5,
                             height: 1.8,
-                            color: Color(0xFF98A2B3),
+                            color: Color(0xFF5A544A),
                           ),
                         ),
                       ),
@@ -3536,9 +3639,9 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
   (IconData, Color, String) _toolMeta(String name) {
     switch (name) {
       case 'web_search':
-        return (Icons.travel_explore_rounded, const Color(0xFF7CE3B6), '联网搜索');
+        return (Icons.travel_explore_rounded, const Color(0xFF2E8F73), '联网搜索');
       case 'fetch_url':
-        return (Icons.language_rounded, const Color(0xFF7CE3B6), '读取网页');
+        return (Icons.language_rounded, const Color(0xFF2E8F73), '读取网页');
       case 'bash':
         return (Icons.terminal_rounded, const Color(0xFFFFB020), '执行命令');
       case 'list_files':
@@ -3554,7 +3657,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
       case 'save_memory':
         return (
           Icons.psychology_alt_rounded,
-          const Color(0xFF9AA7B8),
+          const Color(0xFF5A544A),
           '记入长期记忆',
         );
       default:
@@ -3722,7 +3825,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                           height: 13,
                           alignment: Alignment.center,
                           decoration: const BoxDecoration(
-                            color: Color(0x227CE3B6),
+                            color: Color(0x222E8F73),
                             shape: BoxShape.circle,
                           ),
                           child: Text(
@@ -3934,7 +4037,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
               a.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 9.5, color: Color(0xCCF6F2E9)),
+              style: const TextStyle(fontSize: 9.5, color: Color(0xCC14110E)),
             ),
           ],
         ),
@@ -3952,16 +4055,16 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
         constraints: const BoxConstraints(maxWidth: 250),
         padding: const EdgeInsets.fromLTRB(9, 8, 9, 8),
         decoration: BoxDecoration(
-          color: const Color(0x2EF6F2E9),
+          color: const Color(0x2E14110E),
           borderRadius: BorderRadius.circular(9),
-          border: Border.all(color: const Color(0x4DF6F2E9)),
+          border: Border.all(color: const Color(0x4D14110E)),
         ),
         child: Row(
           children: [
             const Icon(
               Icons.insert_drive_file_outlined,
               size: 19,
-              color: Color(0xE6F6F2E9),
+              color: Color(0xE614110E),
             ),
             const SizedBox(width: 8),
             Flexible(
@@ -3984,7 +4087,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     _sizeLabel(a.size),
                     style: const TextStyle(
                       fontSize: 9.5,
-                      color: Color(0xB3F6F2E9),
+                      color: Color(0xB314110E),
                     ),
                   ),
                 ],
@@ -4035,21 +4138,21 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(13, 10, 13, 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF17362A),
+                    color: const Color(0xFF14110E),
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(5),
+                      topLeft: Radius.circular(3),
+                      topRight: Radius.circular(3),
+                      bottomLeft: Radius.circular(3),
+                      bottomRight: Radius.circular(0),
                     ),
                     border: Border.all(
-                      color: const Color(0x997CE3B6),
-                      width: 1.1,
+                      color: const Color(AfPalette.text),
+                      width: 2,
                     ),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.5),
-                        offset: const Offset(3, 3),
+                        color: Color(0x6614110E),
+                        offset: Offset(4, 4),
                         blurRadius: 0,
                       ),
                     ],
@@ -4062,9 +4165,12 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                           style: const TextStyle(
                             fontSize: 14,
                             height: 1.6,
-                            color: Colors.white,
+                            color: Color(AfPalette.card),
                           ),
-                          child: _richBody(m.text),
+                          child: _richBody(
+                            m.text,
+                            textColor: const Color(AfPalette.card),
+                          ),
                         ),
                       if (m.atts.isNotEmpty) ...[
                         if (m.text.trim().isNotEmpty) const SizedBox(height: 8),
@@ -4219,8 +4325,8 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
       margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       decoration: BoxDecoration(
         color: const Color(AfPalette.card),
-        borderRadius: BorderRadius.circular(13),
-        border: Border.all(color: const Color(AfPalette.line)),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: const Color(AfPalette.text), width: 1.5),
       ),
       clipBehavior: Clip.antiAlias,
       child: Stack(
@@ -4231,7 +4337,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             bottom: 0,
             child: Container(
               width: 2.5,
-              decoration: const BoxDecoration(gradient: AfPalette.edgeGrad),
+              decoration: const BoxDecoration(color: Color(AfPalette.accent)),
             ),
           ),
           if (kind == 'image' && url.isNotEmpty)
@@ -4347,7 +4453,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
           height: 30,
           margin: const EdgeInsets.only(left: 6),
           decoration: BoxDecoration(
-            color: const Color(0x0FF6F2E9),
+            color: const Color(0x0F14110E),
             borderRadius: BorderRadius.circular(9),
             border: Border.all(color: const Color(AfPalette.line)),
           ),
@@ -4501,7 +4607,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     if (a.uploading)
                       const Positioned.fill(
                         child: ColoredBox(
-                          color: Color(0x88060A10),
+                          color: Color(0x8814110E),
                           child: Center(
                             child: SizedBox(
                               width: 13,
@@ -4602,7 +4708,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
       padding: const EdgeInsets.fromLTRB(14, 4, 14, 10),
       decoration: const BoxDecoration(
         color: Color(AfPalette.bg),
-        border: Border(top: BorderSide(color: Color(AfPalette.line))),
+        border: Border(top: BorderSide(color: Color(AfPalette.text), width: 2)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -4616,13 +4722,21 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
             padding: const EdgeInsets.fromLTRB(9, 8, 8, 8),
             decoration: BoxDecoration(
               // 输入框必须是不透明底，不能透出后面的消息列表
-              color: const Color(AfPalette.card2),
-              borderRadius: BorderRadius.circular(22),
+              color: const Color(AfPalette.card),
+              borderRadius: BorderRadius.circular(3),
               border: Border.all(
                 color: _focused
-                    ? const Color(AfPalette.accentLineStrong)
-                    : const Color(AfPalette.lineStrong),
+                    ? const Color(AfPalette.accent)
+                    : const Color(AfPalette.text),
+                width: _focused ? 2 : 1.8,
               ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x5514110E),
+                  offset: Offset(3, 3),
+                  blurRadius: 0,
+                ),
+              ],
             ),
             child: Row(
               children: [
@@ -4635,12 +4749,13 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     decoration: BoxDecoration(
                       color: _attachOpen
                           ? const Color(AfPalette.accentSoft)
-                          : const Color(0x08F6F2E9),
-                      borderRadius: BorderRadius.circular(11),
+                          : const Color(AfPalette.card),
+                      borderRadius: BorderRadius.circular(2),
                       border: Border.all(
                         color: _attachOpen
-                            ? const Color(AfPalette.accentLine)
-                            : const Color(AfPalette.line),
+                            ? const Color(AfPalette.accent)
+                            : const Color(AfPalette.text),
+                        width: 1.2,
                       ),
                     ),
                     child: AnimatedRotation(
@@ -4674,7 +4789,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     onTap: _closeAttachForTyping,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: const Color(AfPalette.card2),
+                      fillColor: const Color(AfPalette.card),
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
@@ -4709,7 +4824,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     height: 30,
                     decoration: BoxDecoration(
                       color: _micOn
-                          ? const Color(0x267CE3B6)
+                          ? const Color(0x262E8F73)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(9),
                     ),
@@ -4733,12 +4848,25 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     width: 34,
                     height: 34,
                     decoration: BoxDecoration(
-                      gradient: blocked && !_busy ? null : AfPalette.accentGrad,
                       color: blocked && !_busy
                           ? const Color(AfPalette.card2)
-                          : null,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: blocked && !_busy ? null : AfPalette.glow(),
+                          : const Color(AfPalette.text),
+                      borderRadius: BorderRadius.circular(2),
+                      border: Border.all(
+                        color: blocked && !_busy
+                            ? const Color(AfPalette.line)
+                            : const Color(AfPalette.text),
+                        width: 1.2,
+                      ),
+                      boxShadow: blocked && !_busy
+                          ? null
+                          : const [
+                              BoxShadow(
+                                color: Color(0xFF2E8F73),
+                                offset: Offset(3, 3),
+                                blurRadius: 0,
+                              ),
+                            ],
                     ),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 180),
@@ -4869,7 +4997,7 @@ class _AfWorkbenchPageState extends State<AfWorkbenchPage>
                     _closeAttachPanel(unfocus: true);
                     _newConv();
                   },
-                  const Color(0xFF8E8E96),
+                  const Color(0xFF5A544A),
                 ),
               ];
               return Wrap(
@@ -5078,7 +5206,7 @@ class _PreviewPageState extends State<_PreviewPage> {
             decoration: BoxDecoration(
               color: const Color(AppColors.card),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0x14F6F2E9)),
+              border: Border.all(color: const Color(0x1414110E)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -5186,9 +5314,9 @@ class _ImageViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(AppColors.textPrimary),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(AppColors.textPrimary),
         title: Text(
           name ?? '图片',
           maxLines: 1,
@@ -5251,7 +5379,7 @@ class _DashPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0x99F6F2E9)
+      ..color = const Color(0x9914110E)
       ..strokeWidth = 1;
     const gap = 4.0;
     const dash = 3.0;
