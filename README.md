@@ -5,6 +5,7 @@
 ![启动页](docs/screenshots/splash.png)
 ![登录页](docs/screenshots/login.png)
 ![Agent 欢迎页](docs/screenshots/workbench.png)
+![对话页](docs/screenshots/chat.png)
 
 ## 这是什么
 
@@ -118,7 +119,7 @@ flutter test
 flutter test test/visual_test.dart --update-goldens
 ```
 
-当前结果：`flutter analyze` 0 issues，`flutter test` 8/8 通过；视觉基线为 390×844，另有 320×568 小屏与 1.3 倍字体布局测试。
+当前结果：`flutter analyze` 0 issues，`flutter test` 9/9 通过；视觉基线为 390×844（启动/登录/欢迎/对话），另有 320×568 小屏与 1.3 倍字体布局测试。CI 用 `--exclude-tags golden` 规避 macOS 与 Linux 的字体栅格差异。
 
 详见 [docs/VERIFY.md](docs/VERIFY.md)。
 

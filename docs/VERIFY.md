@@ -16,7 +16,7 @@ Flutter 3.47.7 / stable，Dart SDK `^3.13.5`。
 
 ```text
 $ flutter test
-00:03 +8: All tests passed!
+00:03 +9: All tests passed!
 ```
 
 覆盖：
@@ -25,6 +25,7 @@ $ flutter test
 - 390×844 启动页视觉基线
 - 390×844 登录页视觉基线
 - 390×844 Agent 欢迎页视觉基线
+- 390×844 对话页视觉基线（用户气泡 / AI 卡片 / 思考折叠 / 操作栏）
 - 320×568 登录页布局（不溢出）
 - 320×568 登录页 1.3 倍字体（不溢出）
 - 320×568 Agent 欢迎页布局（不溢出）
@@ -80,6 +81,7 @@ GET https://www.dbmt999.asia/community/api/af/quota   -> HTTP 401 {"ok":false,"e
 | 启动页 | 品牌字标、完整主视觉、对话框、加载条、ONLINE 贴纸 | 通过 |
 | 登录页 | 头图、左侧字标、独立版贴纸、台词气泡、LOGIN / 01、两种登录方式 | 通过 |
 | Agent 欢迎页 | 欢迎插画、AGENT / READY、在线状态、三步说明、建议问题、模式栏、输入栏 | 通过 |
+| 对话页 | 用户气泡、AI 纸白卡片、硬阴影、思考折叠、复制/点赞/点踩/分享、输入栏 | 通过 |
 | 小屏 320×568 | 登录页、欢迎页、1.3 倍字体 | 通过 |
 
 额度栏按真实 `/af/quota` 字段显示：`剩余 3.0万 · 5h 2.0万 · FREE · ¥0.00`。此前 mock 只返回 `left` 导致显示 0 的问题已修正，mock 已对齐 `left` / `gift_left` / `w5h_left` / `limit_w5h` / `balance_yuan`。

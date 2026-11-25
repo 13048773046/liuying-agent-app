@@ -144,6 +144,93 @@ void main() {
     );
   });
 
+  testWidgets('对话页视觉', (tester) async {
+    SharedPreferences.setMockInitialValues({'af_conv_id': 'c1'});
+    ApiClient.token = 'visual-test-token';
+    final mock = MockClient((request) async {
+      final path = request.url.path;
+      if (path.endsWith('/af/quota')) {
+        return http.Response(
+          jsonEncode({
+            'ok': true,
+            'plan': 'free',
+            'left': 30000,
+            'gift_left': 30000,
+            'w5h_left': 20000,
+            'limit_w5h': 20000,
+            'balance_yuan': 0,
+          }),
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        );
+      }
+      if (path.endsWith('/af/conversations')) {
+        return http.Response(
+          jsonEncode({
+            'ok': true,
+            'list': [
+              {'id': 'c1', 'title': '项目周报', 'created': 1700000000, 'updated': 1700000100},
+            ],
+          }),
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        );
+      }
+      if (path.endsWith('/af/messages')) {
+        return http.Response(
+          jsonEncode({
+            'ok': true,
+            'list': [
+              {
+                'id': 'm1',
+                'role': 'user',
+                'content': '帮我把这周的项目进度整理成一页周报',
+                'created': 1700000000,
+              },
+              {
+                'id': 'm2',
+                'role': 'assistant',
+                'content': '已整理好。**本周完成**：独立壳、双端配置、视觉主题。\n\n**下周计划**：真机回归与商店素材。',
+                'reasoning': '先确认周报模板，再按完成/风险/计划三段整理。',
+                'created': 1700000005,
+                'ms': 1200,
+                'status': 'done',
+              },
+            ],
+            'items': <Object>[],
+          }),
+          200,
+          headers: {'content-type': 'application/json; charset=utf-8'},
+        );
+      }
+      return http.Response(
+        jsonEncode({'ok': true}),
+        200,
+        headers: {'content-type': 'application/json; charset=utf-8'},
+      );
+    });
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    await tester.pumpWidget(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: buildImmersiveTheme(),
+        home: MangaBackdrop(
+          child: AfWorkbenchPage(client: mock, onLogout: () {}),
+        ),
+      ),
+    );
+    await _warmImages(tester, const [
+      'assets/ai/xiaoying.png',
+    ]);
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pump(const Duration(seconds: 2));
+    await expectLater(
+      find.byType(AfWorkbenchPage),
+      matchesGoldenFile('goldens/chat.png'),
+    );
+  });
+
   testWidgets('独立 App 启动后不出现社区首页', (tester) async {
     await tester.pumpWidget(const LiuyingAgentApp(initialToken: ''));
     await tester.pump(const Duration(milliseconds: 1800));
