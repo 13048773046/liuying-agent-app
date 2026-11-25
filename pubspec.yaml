@@ -1,0 +1,39 @@
+name: liuying_agent
+description: "小萤 Agent · 独立 App（复用流萤社区 /af 后端）"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  characters: ^1.4.1
+  http: ^1.2.2
+  shared_preferences: ^2.3.2
+  flutter_secure_storage: ^9.2.4
+  cached_network_image: ^3.4.1
+  image_picker: ^1.1.2
+  file_picker: ^10.3.3
+  webview_flutter: ^4.10.0
+  speech_to_text: ^7.5.0
+  path_provider: ^2.1.5
+  share_plus: ^10.1.4
+  flutter_image_compress: ^2.5.1
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/ai/
+    - assets/brand/
+  fonts:
+    - family: NotoSansSC
+      fonts:
+        - asset: assets/fonts/NotoSansSC-Regular.otf
